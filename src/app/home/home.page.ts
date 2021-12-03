@@ -53,4 +53,8 @@ export class HomePage implements OnInit{
   public addContact() : void{
     this.router.navigate(['new']);
   }
+
+  public seeDetails(id : number) : void {
+    this.router.navigate(['contact', id]);
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Contacto } from '../interfaces/contacto.interface';
 import { SesionesService } from './sesiones.service';
 
@@ -9,6 +10,9 @@ import { SesionesService } from './sesiones.service';
 })
 export class ContactosService {
   public contactos = new Subject<Contacto[]>();
+  public contacto = new Subject<Contacto>();
+
+  private error : string = 'Error de servicio';
   private id : string;
 
   constructor(private http            : HttpClient,
@@ -21,5 +25,37 @@ export class ContactosService {
         .subscribe(data => {
           this.contactos.next(data);
         });
+  }
+
+  public cargarContacto(id : string){
+    this.http.get<Contacto>(`/api/v1/contactos/${ id }`)
+        .subscribe(data => {
+          this.contacto.next(data);
+        });
+  }
+
+  public eliminarContacto(id : string){
+    return this.http.delete(`/api/v1/contactos/${ id }`)
+               .pipe(
+                 map(resp=>{
+                  console.log(resp);
+                  switch(resp['code']){
+                    case 'ok':
+                      return true;
+                    case 'error':
+                      this.error = 'No se ha podido eliminar el contacto';
+                      return false;
+                  }
+                 }),
+                 catchError(error => {
+                   console.error(error);
+                   this.error = 'Error con el servidor';
+                   return of(false);
+                 })
+               );
+  }
+
+  public getError() : string{
+    return this.error;
   }
 }

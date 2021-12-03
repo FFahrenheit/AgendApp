@@ -18,14 +18,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item *ngFor="let contacto of contactos">
+  <ion-item *ngFor="let contacto of contactos" class="contacto" (click)="seeDetails(contacto.id)">
     <ion-thumbnail>
-      <img [src]="contacto.foto" class="imagen">
+      <img [src]="contacto.foto" [alt]="contacto.nombre" class="imagen">
     </ion-thumbnail>
     <ion-label class="contenido">
       <h3> {{ contacto.nombre }} </h3>
       <h5>
-        <ion-icon name="call-outline"></ion-icon>
+        <ion-icon name="call"></ion-icon>
         {{ contacto.telefono }}
       </h5>
     </ion-label>
