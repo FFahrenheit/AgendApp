@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
       this.sesionesService.login(this.get('correo').value, this.get('contraseña').value)
           .subscribe(async(resp)=> {
             if(resp){
-              await new Promise(r => setTimeout(r, 1200));
+              await new Promise(r => setTimeout(r, 180));
               this.router.navigate(['home']);
             }else{
               await this.errorAlert('Error al iniciar sesión', this.sesionesService.getError());

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user.interface';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class SesionesService {
   private authUser : User = null;
   private error : string = 'Error de servicio';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http    : HttpClient,
+              private router  : Router) { }
 
   public login(correo : string, contraseña : string){
     const body = {
@@ -27,6 +29,10 @@ export class SesionesService {
             case 'ok':
               localStorage.setItem('id', resp['id']);
               localStorage.setItem('nombre', resp['nombre']);
+              this.authUser = {
+                id: localStorage.getItem('id'),
+                nombre: localStorage.getItem('nombre')
+              };
               return true;
             case 'no':
               this.error = 'Credenciales incorrectas. Verifique sus datos';
@@ -65,5 +71,16 @@ export class SesionesService {
   private isValid(item : string) : boolean{
     const value = localStorage.getItem(item);
     return typeof value !== 'undefined' && value && value != '';
+  }
+
+  public getLoggedUser() : User{
+    return this.authUser;
+  }
+
+  public logout() : void{
+    this.authUser = null;
+    localStorage.removeItem('id');
+    localStorage.removeItem('nombre');
+    this.router.navigate(['login']);
   }
 }
