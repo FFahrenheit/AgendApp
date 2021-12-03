@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/registro']" color="primary">Regístrate</ion-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"> Iniciar sesión </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <div>
+    <p align="center">
+      <img src="assets/logo.png" width="50%">
+    </p>
+    <form [formGroup]="form">
+      <ion-item [class.ion-invalid]="get('correo').invalid">
+        <ion-label position="floating">
+          Correo
+          <span class="required">*</span>
+        </ion-label>
+        <ion-input placeholder="Ingrese su correo"  clearInput="true" required="true" formControlName="correo" autocomplete="on"></ion-input>
+      </ion-item>
+      <ion-item [class.ion-invalid]="get('contraseña').invalid">
+        <ion-label position="floating">
+          Contraseña
+          <span class="required">*</span>
+        </ion-label>
+        <ion-input placeholder="Ingrese su contraseña" type="password" clearInput="true" required="true" formControlName="contraseña"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="onLogin()" color="primary">Entrar</ion-button>
+    </form>
+  </div>
+</ion-content>
