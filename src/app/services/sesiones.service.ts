@@ -22,6 +22,7 @@ export class SesionesService {
     return this.http.post<any>('/api/v1/sesiones', 
       body).pipe(
         map(resp => {
+          console.log(resp);
           switch(resp['code']){
             case 'ok':
               localStorage.setItem('id', resp['id']);
@@ -51,7 +52,14 @@ export class SesionesService {
     if(this.authUser != null){
       return true;
     }
-    return this.isValid('id') && this.isValid('nombre');
+    if(this.isValid('id') && this.isValid('nombre')){
+      this.authUser = {
+        id: localStorage.getItem('id'),
+        nombre: localStorage.getItem('nombre')
+      };
+      return true;
+    }
+    return false;
   }
 
   private isValid(item : string) : boolean{

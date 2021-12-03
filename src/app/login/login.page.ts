@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  public onLogin(){
+  public async onLogin(){
     console.log(this.form.value);
     if(this.form.valid){
       this.sesionesService.login(this.get('correo').value, this.get('contraseña').value)
@@ -34,12 +34,13 @@ export class LoginPage implements OnInit {
               await new Promise(r => setTimeout(r, 1200));
               this.router.navigate(['home']);
             }else{
-              await this.errorAlert();
+              await this.errorAlert('Error al iniciar sesión', this.sesionesService.getError());
             }
           }, async(error)=> {
-            await this.errorAlert();
+            await this.errorAlert('Error al iniciar sesión', this.sesionesService.getError());
           });
     }else{
+      await this.errorAlert('Falta información', 'Por favor, llene el formulario');
       this.form.markAllAsTouched();
     }
   }
@@ -48,10 +49,10 @@ export class LoginPage implements OnInit {
     return this.form.controls[ctrl];
   }
 
-  public async errorAlert(){
+  public async errorAlert(header: string, message : string){
     await this.alertController.create({
-      header: 'Error al iniciar sesión',
-      message: this.sesionesService.getError(),
+      header: header,
+      message: message,
       mode: 'ios',
       buttons: [
         {
