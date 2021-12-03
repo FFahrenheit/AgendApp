@@ -55,6 +55,30 @@ export class ContactosService {
                );
   }
 
+  public agregarContacto(body : any){
+    return this.http.post('/api/v1/contactos', body)
+    .pipe(
+      map(resp=>{
+       console.log(resp);
+       switch(resp['code']){
+         case 'ok':
+           return true;
+         case 'no':
+           this.error = 'No se pudo agregar el contacto. Verifique los datos';
+           return false;
+         case 'error':
+           this.error = 'No se ha podido agregar el contacto';
+           return false;
+       }
+      }),
+      catchError(error => {
+        console.error(error);
+        this.error = 'Error con el servidor';
+        return of(false);
+      })
+    );
+  }
+
   public getError() : string{
     return this.error;
   }

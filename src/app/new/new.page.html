@@ -1,9 +1,78 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>new</ion-title>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> Nuevo contacto </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"> Nuevo contacto </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <div align="center">
+      <img [src]="imageUrl" alt="Imagen de contacto" class="foto">
+    </div>
+
+    <ion-card-content>
+      
+      <form [formGroup]="form">
+        <ion-item [class.ion-invalid]="get('nombre').invalid">
+          <ion-label position="floating">
+            Nombre
+            <span class="required">*</span>
+          </ion-label>
+          <ion-input placeholder="Ingrese el nombre de contacto" clearInput="true" formControlName="nombre" autocomplete="on"></ion-input>
+        </ion-item>
+  
+        <ion-item [class.ion-invalid]="get('telefono').invalid">
+          <ion-label position="floating">
+            Teléfono
+            <span class="required">*</span>
+          </ion-label>
+          <ion-input placeholder="Ingrese el teléfono del contacto" type="tel" clearInput="true"  formControlName="telefono"></ion-input>
+        </ion-item>
+  
+        <ion-item [class.ion-invalid]="get('foto').invalid">
+          <ion-label position="floating"> Foto </ion-label>
+          <ion-input placeholder="URL de la foto" type="url" clearInput="true" formControlName="foto"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Correo </ion-label>
+          <ion-input placeholder="Ingrese el correo del contacto" type="email" clearInput="true" formControlName="correo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Facebook </ion-label>
+          <ion-input placeholder="Facebook del contacto" type="url" clearInput="true" formControlName="facebook"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Twitter </ion-label>
+          <ion-input placeholder="Twitter del contacto" type="url" clearInput="true" formControlName="twitter"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Linkedin </ion-label>
+          <ion-input placeholder="LinkedIn del contacto" type="url" clearInput="true" formControlName="linkedin"></ion-input>
+        </ion-item>
+
+      </form>
+
+      <div align="center">
+        <ion-button expand="block" (click)="onSave()" color="primary">Guardar contacto</ion-button>
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>
