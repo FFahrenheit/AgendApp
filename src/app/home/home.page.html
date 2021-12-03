@@ -30,6 +30,14 @@
       </h5>
     </ion-label>
   </ion-item>
+
+  <p *ngIf="!contactos || contactos.length == 0" class="" align="center">
+    No hay contactos registrados
+    <br>
+    <ion-text (click)="addContact()" color="primary" class="contacto">
+      Empieza a registrar amigos
+    </ion-text>
+  </p>
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addContact()">

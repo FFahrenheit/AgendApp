@@ -17,7 +17,7 @@ export class ContactosService {
 
   constructor(private http            : HttpClient,
               private sesionesService : SesionesService) { 
-                this.id = sesionesService.getLoggedUser().id;
+                this.id = sesionesService.getLoggedUser()?.id;
               }
 
   public cargarContactos(){
