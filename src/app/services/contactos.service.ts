@@ -17,10 +17,15 @@ export class ContactosService {
 
   constructor(private http            : HttpClient,
               private sesionesService : SesionesService) { 
-                this.id = sesionesService.getLoggedUser()?.id;
+                this.getUserId();
               }
 
+  private getUserId() : void{
+    this.id = this.sesionesService.getLoggedUser()?.id;
+    console.log('Auth user ' + this.id);
+  }
   public cargarContactos(){
+    this.getUserId();
     this.http.get<Contacto[]>(`/api/v1/usuarios/${ this.id }/contactos`)
         .subscribe(data => {
           this.contactos.next(data);
